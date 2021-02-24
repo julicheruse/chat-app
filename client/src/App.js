@@ -1,6 +1,8 @@
 import "./App.css";
+import { Route, HashRouter as Router } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import LoginBox from "./components/LoginBox";
+import Chat from "./components/Chat";
 
 const theme = createMuiTheme({
   palette: {
@@ -9,6 +11,9 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: "#a0aba3",
+    },
+    background: {
+      main: "#e5f5ea",
     },
   },
 
@@ -32,7 +37,10 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <LoginBox></LoginBox>
+        <Router>
+          <Route exact path="/" component={LoginBox} />
+          <Route exact path="/chat" component={Chat} />
+        </Router>
       </div>
     </ThemeProvider>
   );
