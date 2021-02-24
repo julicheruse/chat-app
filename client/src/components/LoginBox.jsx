@@ -4,6 +4,7 @@ import { Typography, Button, TextField, Paper } from "@material-ui/core";
 
 export default function LoginBox() {
   const handleSubmit = (e) => {
+    e.preventDefault();
     alert("submitiado");
   };
   return (
@@ -13,7 +14,7 @@ export default function LoginBox() {
         <Typography variant="h6">What's your name?</Typography>
         <TextField></TextField>
         <br />
-        <Button type="submit" color="primary">
+        <Button type="submit" variant="contained" color="primary">
           Enter Chat
         </Button>
       </form>
