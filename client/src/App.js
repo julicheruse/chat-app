@@ -1,4 +1,5 @@
 import "./App.css";
+import React, { useState } from "react";
 import { Route, HashRouter as Router } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import LoginBox from "./components/LoginBox";
@@ -34,12 +35,13 @@ const theme = createMuiTheme({
 });
 
 function App() {
+  const [name, setName] = useState("");
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
         <Router>
-          <Route exact path="/" component={LoginBox} />
-          <Route exact path="/chat" component={Chat} />
+          <Route exact path="/" render={() => <LoginBox setName={setName} />} />
+          <Route exact path="/chat" render={() => <Chat name={name} />} />
         </Router>
       </div>
     </ThemeProvider>
