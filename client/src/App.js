@@ -1,5 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
+import Socket from "./components/Socket";
+import socket from "./components/Socket";
 import { Route, HashRouter as Router } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import LoginBox from "./components/LoginBox";
@@ -35,7 +37,9 @@ const theme = createMuiTheme({
 });
 
 function App() {
+  socket.emit("conectado", "jelooouuu");
   const [name, setName] = useState("");
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
