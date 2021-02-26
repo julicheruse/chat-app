@@ -12,8 +12,13 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  socket.on("conectado", () => {
-    console.log("te conectaste wacho");
+  socket.on("conectado", (name) => {
+    io.emit("guests", name);
+    io.emit("conectado", name);
+    console.log(name);
+  });
+  socket.on("message", (name, message) => {
+    io.emit("messages", { name, message });
   });
 });
 

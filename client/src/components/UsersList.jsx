@@ -2,18 +2,24 @@ import React from "react";
 
 import { Typography, Paper } from "@material-ui/core";
 
-export default function UsersList(props) {
+export default function UsersList({ name }) {
   return (
     <Paper
       variant="outlined"
       square
       style={{
         display: "flex",
-        justifySelf: "end",
+        flexDirection: "column",
         alignSelf: "center",
+        width: "200px",
+        height: "500px",
+        justifyContent: "flex-start",
       }}
     >
-      <Typography>{props.name}</Typography>
+      <Typography>You're logged as:</Typography>
+      <p>
+        <Typography>{name}</Typography>
+      </p>
     </Paper>
   );
 }

@@ -1,25 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { Typography, Button, TextField, Paper } from "@material-ui/core";
+import { Button, TextField, Paper } from "@material-ui/core";
+import socket from "./Socket";
 
-export default function UsersList(props) {
-  const handleSubmit = (e) => {
+export default function ChatInput({ name, message, setMessage }) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    props.setMessages([...props.messages, props.message]);
+    //props.setMessages([...props.messages, props.message]);
+    await socket.emit("message", name, message);
   };
   return (
-    <Paper>
+    <Paper style={{ margin: "10px", display: "flex", alignSelf: "flex-end" }}>
       <form
         onSubmit={handleSubmit}
-        label="Write your message"
-        style={{ padding: "10px", flexDirection: "column" }}
+        style={{ padding: "10px", display: "flex", flexDirection: "column" }}
       >
-        <TextField onChange={(e) => props.setMessage(e.target.value)} />
-        <br />
+        <label
+          style={{
+            padding: "10px",
+            display: "flex",
+            justifySelf: "flex-start",
+          }}
+        >
+          Write your message
+        </label>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <TextField onChange={(e) => setMessage(e.target.value)} />
 
-        <Button type="submit" variant="contained" color="primary">
-          Send
-        </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            style={{ margin: "10px" }}
+          >
+            Send
+          </Button>
+        </div>{" "}
       </form>
     </Paper>
   );
