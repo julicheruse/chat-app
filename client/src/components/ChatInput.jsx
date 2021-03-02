@@ -8,6 +8,7 @@ export default function ChatInput({ name, message, setMessage }) {
     e.preventDefault();
     //props.setMessages([...props.messages, props.message]);
     await socket.emit("message", name, message);
+    setMessage("");
   };
   return (
     <Paper style={{ margin: "10px", display: "flex", alignSelf: "flex-end" }}>
@@ -25,7 +26,10 @@ export default function ChatInput({ name, message, setMessage }) {
           Write your message
         </label>
         <div style={{ display: "flex", flexDirection: "row" }}>
-          <TextField onChange={(e) => setMessage(e.target.value)} />
+          <TextField
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
 
           <Button
             type="submit"
