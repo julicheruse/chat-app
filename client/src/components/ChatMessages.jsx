@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 
 import { Typography, Paper } from "@material-ui/core";
 import socket from "./Socket";
+import ChatMsg from "./ChatMsg";
 
 export default function ChatMessages({ messages, name, setMessages }) {
   useEffect(() => {
@@ -20,11 +21,22 @@ export default function ChatMessages({ messages, name, setMessages }) {
         justifySelf: "center",
         alignSelf: "center",
         minHeight: "100px",
+        maxHeight: "300px",
         width: "300px",
-        paddingBlock: "20px",
+        paddingBlockStart: "20px",
+        overflowY: "auto",
+        overflowX: "hidden",
       }}
     >
       {messages &&
+        messages.map((m) => (
+          <ChatMsg
+            avatar={m.name[0]}
+            side={m.name === name ? "right" : "left"}
+            messages={[m.message]}
+          />
+        ))}
+      {/* {messages &&
         messages.map((m) => (
           <Typography
             variant="body2"
@@ -40,7 +52,7 @@ export default function ChatMessages({ messages, name, setMessages }) {
           >
             {m !== "" ? m.name + ": " + m.message : null}
           </Typography>
-        ))}
+        ))} */}
     </Paper>
   );
 }
