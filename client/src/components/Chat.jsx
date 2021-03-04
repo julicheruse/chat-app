@@ -4,6 +4,7 @@ import UsersList from "./UsersList";
 import GuestList from "./GuestList";
 import ChatMessages from "./ChatMessages";
 import ChatInput from "./ChatInput";
+import ChatToolbar from "./ChatToolbar";
 
 export default function Chat({ name }) {
   const [message, setMessage] = useState("");
@@ -35,6 +36,7 @@ export default function Chat({ name }) {
           setMessage={setMessage}
           setMessages={setMessages}
         />
+        <ChatToolbar />
       </div>
       <GuestList guests={guests} setGuests={setGuests} name={name} />
     </div>
