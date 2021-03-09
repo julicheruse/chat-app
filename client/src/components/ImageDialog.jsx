@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import socket from "./Socket";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -8,19 +9,27 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import ImageTagger from "./ImageTagger";
 
-export default function ImageDialog() {
-  const [open, setOpen] = React.useState(false);
+export default function ImageDialog({ name }) {
+  const [open, setOpen] = useState(false);
+  const [canvs, setCanvs] = useState(null);
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    socket.emit("message", name, canvs.src);
+    console.log(canvs);
     setOpen(false);
   };
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleClickOpen}
+        fullWidth="true"
+      >
         Upload Picture
       </Button>
       <Dialog
@@ -35,14 +44,14 @@ export default function ImageDialog() {
           <DialogContentText>
             You can upload and tag your pictures here.
           </DialogContentText>
-          <ImageTagger />
+          <ImageTagger canvs={canvs} setCanvs={setCanvs} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
           <Button onClick={handleClose} color="primary">
-            Done
+            Send
           </Button>
         </DialogActions>
       </Dialog>

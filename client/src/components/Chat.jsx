@@ -36,7 +36,7 @@ export default function Chat({ name }) {
           setMessage={setMessage}
           setMessages={setMessages}
         />
-        <ChatToolbar />
+        <ChatToolbar name={name} />
       </div>
       <GuestList guests={guests} setGuests={setGuests} name={name} />
     </div>

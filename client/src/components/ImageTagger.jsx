@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Button } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { scaling } from "./utils";
+import TagDialog from "./TagDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,18 +16,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ImageTagger() {
+export default function ImageTagger({ canvs, setCanvs }) {
+  const classes = useStyles();
   const [foto, setFoto] = useState(false);
   const [drawing, setDrawing] = useState(false);
   const [start, setStart] = useState({});
   const [end, setEnd] = useState({});
+  const [tag, setTag] = useState({});
+  const [tagging, setTagging] = useState(false);
   const [tags, setTags] = useState([]);
-  const classes = useStyles();
+
   const handleChange = (event) => {
     setFoto(true);
     const canvas = document.getElementById("canv");
     var ctx = canvas.getContext("2d");
-    //var canvas = document.createElement("canvas");
+
     var dialog = document.getElementById("dialog");
     dialog.appendChild(canvas);
     canvas.hidden = false;
@@ -35,7 +39,7 @@ export default function ImageTagger() {
     var img = new Image();
 
     img.src = URL.createObjectURL(event.target.files[0]);
-
+    setCanvs(img);
     img.onload = function () {
       var sc = scaling(img.width, img.height, canvas);
       ctx.scale(sc, sc);
@@ -55,10 +59,17 @@ export default function ImageTagger() {
   function endPos(e) {
     let ctx = canvas.getContext("2d");
     draw(e);
-
     setDrawing(false);
     ctx.beginPath();
     ctx.strokeRect(start.x, start.y, end.x - start.x, end.y - start.y);
+    setTag({
+      startX: start.x,
+      startY: start.y,
+      width: end.x - start.x,
+      height: end.y - start.y,
+      text: "",
+    });
+    setTagging(true);
     setEnd({});
     setStart({});
   }
@@ -68,7 +79,6 @@ export default function ImageTagger() {
     if (!drawing) return;
     let ctx = canvas.getContext("2d");
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    //ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     setEnd({ x: offsetX, y: offsetY });
     ctx.beginPath();
@@ -77,6 +87,12 @@ export default function ImageTagger() {
     ctx.strokeStyle = "red";
   }
 
+  /*   const handleTagClick = (e) => {
+    e.preventDefault();
+    setTags([...tags, tag]);
+    console.log(tags);
+    setTagging(false);
+  }; */
   return (
     <form id="dialog" className={classes.root}>
       <input
@@ -86,13 +102,27 @@ export default function ImageTagger() {
         type="file"
         onChange={handleChange}
       />
+
+      {/* {tagging ? (
+        <div>
+          <TextField id="tag" onChange={handleTextChange} />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleTagClick}
+            component="span"
+          >
+            tag
+          </Button>
+        </div>
+      ) : null} */}
       <canvas
         id="canv"
         hidden={true}
         onMouseDown={startPos}
         onMouseUp={endPos}
         onMouseMove={draw}
-      ></canvas>
+      />
       <br></br>
       <label htmlFor="contained-button-file">
         {foto ? null : (
@@ -101,6 +131,14 @@ export default function ImageTagger() {
           </Button>
         )}
       </label>
+      <TagDialog
+        tagging={tagging}
+        setTagging={setTagging}
+        tags={tags}
+        setTags={setTags}
+        tag={tag}
+        setTag={setTag}
+      />
     </form>
   );
 }

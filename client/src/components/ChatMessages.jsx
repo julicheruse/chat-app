@@ -10,6 +10,12 @@ export default function ChatMessages({ messages, name, setMessages }) {
       setMessages([...messages, msg]);
     });
   }, [messages, setMessages]);
+
+  /* useEffect(() => {
+    socket.on("picture", (pic) => {
+      setMessages([...messages, pic]);
+    });
+  }, [messages, setMessages]); */
   console.log("mesjs", messages);
   return (
     <Paper
@@ -21,6 +27,7 @@ export default function ChatMessages({ messages, name, setMessages }) {
         justifySelf: "center",
         alignSelf: "center",
         minHeight: "100px",
+        height: "500px",
         maxHeight: "300px",
         width: "300px",
         paddingBlockStart: "20px",
@@ -36,23 +43,6 @@ export default function ChatMessages({ messages, name, setMessages }) {
             messages={[m.message]}
           />
         ))}
-      {/* {messages &&
-        messages.map((m) => (
-          <Typography
-            variant="body2"
-            style={
-              m.name !== name
-                ? {
-                    textAlign: "left",
-                  }
-                : {
-                    textAlign: "right",
-                  }
-            }
-          >
-            {m !== "" ? m.name + ": " + m.message : null}
-          </Typography>
-        ))} */}
     </Paper>
   );
 }
