@@ -36,13 +36,21 @@ export default function ChatMessages({ messages, name, setMessages }) {
       }}
     >
       {messages &&
-        messages.map((m) => (
-          <ChatMsg
-            avatar={m.name[0]}
-            side={m.name === name ? "right" : "left"}
-            messages={[m.message]}
-          />
-        ))}
+        messages.map((m) =>
+          m.message.slice(0, 4) === "blob" ? (
+            <ChatMsg
+              avatar={m.name[0]}
+              side={m.name === name ? "right" : "left"}
+              messages={[<img alt="sd" width="150" src={m.message}></img>]}
+            />
+          ) : (
+            <ChatMsg
+              avatar={m.name[0]}
+              side={m.name === name ? "right" : "left"}
+              messages={[m.message]}
+            />
+          )
+        )}
     </Paper>
   );
 }
