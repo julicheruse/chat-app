@@ -87,12 +87,6 @@ export default function ImageTagger({ canvs, setCanvs }) {
     ctx.strokeStyle = "red";
   }
 
-  /*   const handleTagClick = (e) => {
-    e.preventDefault();
-    setTags([...tags, tag]);
-    console.log(tags);
-    setTagging(false);
-  }; */
   return (
     <form id="dialog" className={classes.root}>
       <input
@@ -102,20 +96,6 @@ export default function ImageTagger({ canvs, setCanvs }) {
         type="file"
         onChange={handleChange}
       />
-
-      {/* {tagging ? (
-        <div>
-          <TextField id="tag" onChange={handleTextChange} />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleTagClick}
-            component="span"
-          >
-            tag
-          </Button>
-        </div>
-      ) : null} */}
       <canvas
         id="canv"
         hidden={true}

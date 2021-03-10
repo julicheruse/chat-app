@@ -6,6 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { drawTextBG } from "./utils";
 
 export default function TagDialog({
   tagging,
@@ -23,6 +24,13 @@ export default function TagDialog({
   const handleTagClick = (e) => {
     e.preventDefault();
     setTags([...tags, tag]);
+    let ctx = document.getElementById("canv").getContext("2d");
+
+    if (tag.startY > 30) {
+      drawTextBG(ctx, tag.text, tag.startX, tag.startY - 25);
+    } else {
+      drawTextBG(ctx, tag.text, tag.startX, tag.startY + tag.height + 2);
+    }
 
     setTagging(false);
   };
