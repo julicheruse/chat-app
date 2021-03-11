@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { Button, TextField } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { scaling } from "./utils";
 import TagDialog from "./TagDialog";
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ImageTagger({ canvs, setCanvs }) {
+export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
   const classes = useStyles();
   const [foto, setFoto] = useState(false);
   const [drawing, setDrawing] = useState(false);
@@ -24,7 +24,6 @@ export default function ImageTagger({ canvs, setCanvs }) {
   const [end, setEnd] = useState({});
   const [tag, setTag] = useState({});
   const [tagging, setTagging] = useState(false);
-  const [tags, setTags] = useState([]);
 
   const handleChange = (event) => {
     setFoto(true);
@@ -56,6 +55,19 @@ export default function ImageTagger({ canvs, setCanvs }) {
     setStart({ x: offsetX, y: offsetY });
   }
 
+  function draw(e) {
+    let { offsetX, offsetY } = e.nativeEvent;
+    if (!drawing) return;
+    let ctx = canvas.getContext("2d");
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+    setEnd({ x: offsetX, y: offsetY });
+    ctx.beginPath();
+    ctx.moveTo(offsetX, offsetY);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "red";
+  }
+
   function endPos(e) {
     let ctx = canvas.getContext("2d");
     draw(e);
@@ -72,19 +84,6 @@ export default function ImageTagger({ canvs, setCanvs }) {
     setTagging(true);
     setEnd({});
     setStart({});
-  }
-
-  function draw(e) {
-    let { offsetX, offsetY } = e.nativeEvent;
-    if (!drawing) return;
-    let ctx = canvas.getContext("2d");
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-    setEnd({ x: offsetX, y: offsetY });
-    ctx.beginPath();
-    ctx.moveTo(offsetX, offsetY);
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = "red";
   }
 
   return (

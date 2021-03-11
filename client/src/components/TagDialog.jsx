@@ -16,22 +16,16 @@ export default function TagDialog({
   tag,
   setTag,
 }) {
-  const [open, setOpen] = React.useState(false);
-
-  /* const handleClickOpen = () => {
-    setOpen(true);
-  }; */
   const handleTagClick = (e) => {
     e.preventDefault();
     setTags([...tags, tag]);
     let ctx = document.getElementById("canv").getContext("2d");
 
     if (tag.startY > 30) {
-      drawTextBG(ctx, tag.text, tag.startX, tag.startY - 25);
+      drawTextBG(ctx, tag.text, tag.startX, tag.startY - 20);
     } else {
-      drawTextBG(ctx, tag.text, tag.startX, tag.startY + tag.height + 2);
+      drawTextBG(ctx, tag.text, tag.startX, tag.startY + tag.height + 5);
     }
-
     setTagging(false);
   };
 

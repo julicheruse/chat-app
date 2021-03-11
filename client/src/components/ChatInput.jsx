@@ -6,7 +6,6 @@ import socket from "./Socket";
 export default function ChatInput({ name, message, setMessage }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //props.setMessages([...props.messages, props.message]);
     await socket.emit("message", name, message);
     setMessage("");
   };

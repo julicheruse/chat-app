@@ -20,6 +20,9 @@ io.on("connection", (socket) => {
   socket.on("message", (name, message) => {
     io.emit("messages", { name, message });
   });
+  socket.on("image", (name, image, tags) => {
+    io.emit("messages", { name, image, tags });
+  });
 });
 
 server.listen(3001, () => console.log("arrancó en el 3001"));
