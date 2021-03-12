@@ -30,8 +30,6 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
     const canvas = document.getElementById("canv");
     var ctx = canvas.getContext("2d");
 
-    var dialog = document.getElementById("dialog");
-    dialog.appendChild(canvas);
     canvas.hidden = false;
     canvas.width = 600;
     canvas.height = 500;
@@ -42,8 +40,10 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
     img.onload = function () {
       var sc = scaling(img.width, img.height, canvas);
       ctx.scale(sc, sc);
-      ctx.drawImage(img, 0, 0);
       ctx.save();
+      canvas.style.backgroundImage = `url(${URL.createObjectURL(
+        event.target.files[0]
+      )}`;
     };
   };
 
@@ -63,7 +63,8 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
 
     setEnd({ x: offsetX, y: offsetY });
     ctx.beginPath();
-    ctx.moveTo(offsetX, offsetY);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeRect(start.x, start.y, end.x - start.x, end.y - start.y);
     ctx.lineWidth = 5;
     ctx.strokeStyle = "red";
   }
@@ -73,7 +74,7 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
     draw(e);
     setDrawing(false);
     ctx.beginPath();
-    ctx.strokeRect(start.x, start.y, end.x - start.x, end.y - start.y);
+
     setTag({
       startX: start.x,
       startY: start.y,
@@ -101,6 +102,11 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
         onMouseDown={startPos}
         onMouseUp={endPos}
         onMouseMove={draw}
+        style={{
+          backgroundPosition: "center",
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+        }}
       />
       <br></br>
       <label htmlFor="contained-button-file">
