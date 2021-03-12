@@ -34,7 +34,7 @@ export default function ChatInput({ name, message, setMessage }) {
             type="submit"
             variant="contained"
             color="primary"
-            style={{ margin: "10px" }}
+            style={{ margin: "10px", color: "white" }}
           >
             Send
           </Button>

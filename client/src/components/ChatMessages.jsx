@@ -22,7 +22,7 @@ export default function ChatMessages({ messages, name, setMessages }) {
     setOpen(true);
   };
 
-  //console.log("mesjs", messages);
+  console.log("mesjs", messages);
   return (
     <Paper
       variant="outlined"
@@ -36,11 +36,23 @@ export default function ChatMessages({ messages, name, setMessages }) {
         height: "500px",
         maxHeight: "300px",
         width: "300px",
-        paddingBlockStart: "20px",
+        paddingBlockLeft: "20px",
+        paddingBlockRight: "20px",
         overflowY: "auto",
         overflowX: "hidden",
       }}
     >
+      <div
+        style={{
+          height: "70px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#e3e3e3",
+        }}
+      >
+        MESSAGES
+      </div>
       {messages &&
         messages.map((m) =>
           m.image ? (

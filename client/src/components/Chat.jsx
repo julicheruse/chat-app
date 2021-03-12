@@ -22,6 +22,7 @@ export default function Chat({ name }) {
           display: "flex",
           flexDirection: "column",
           alignContent: "end",
+          padding: "2px",
         }}
       >
         <ChatMessages

@@ -11,11 +11,14 @@ const io = require("socket.io")(server, {
   },
 });
 
+var names = [];
+
 io.on("connection", (socket) => {
   socket.on("conectado", (name) => {
-    io.emit("guests", name);
+    names = [...names, name];
+    io.emit("guests", names);
     io.emit("conectado", name);
-    console.log(name);
+    console.log(names);
   });
   socket.on("message", (name, message) => {
     io.emit("messages", { name, message });

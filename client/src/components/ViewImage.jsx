@@ -44,7 +44,7 @@ export default function ViewImage({ image, tags, open, setOpen }) {
         }
       });
     };
-  }, [image, tags, open]);
+  }, [image, tags, open, ViewImage]);
 
   return (
     <div>

@@ -35,6 +35,9 @@ export default function ImageDialog({ name }) {
         color="primary"
         onClick={handleClickOpen}
         fullWidth="true"
+        style={{
+          color: "white",
+        }}
       >
         Upload Picture
       </Button>

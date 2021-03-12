@@ -8,13 +8,26 @@ import Chat from "./components/Chat";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#80bad1",
+      main: "#80d1c0",
     },
     secondary: {
+      main: "#80d197",
+    },
+    textPrimary: {
       main: "#a0aba3",
+    },
+    textSecondary: {
+      main: "#FFFFFF",
     },
     background: {
       main: "#e5f5ea",
+    },
+  },
+  overrides: {
+    MuiButton: {
+      text: {
+        color: "#FFFFFF",
+      },
     },
   },
 

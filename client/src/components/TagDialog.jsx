@@ -31,11 +31,11 @@ export default function TagDialog({
 
   const handleClose = () => {
     setTag({});
-    console.log(tags);
     setTagging(false);
   };
   const handleTextChange = (e) => {
     tag.text = e.target.value;
+    console.log(tags);
     console.log(tag);
   };
 
@@ -46,7 +46,7 @@ export default function TagDialog({
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogTitle id="form-dialog-title">Tag Photo</DialogTitle>
         <DialogContent>
           <DialogContentText>Write the person's name</DialogContentText>
           <TextField

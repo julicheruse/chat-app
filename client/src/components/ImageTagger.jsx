@@ -33,13 +33,13 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
 
     const canvas = document.getElementById("canv");
     var ctx = canvas.getContext("2d");
-
+    const imagen = event.target.files[0];
     canvas.hidden = false;
     canvas.width = 600;
     canvas.height = 500;
     var img = new Image();
 
-    img.src = URL.createObjectURL(event.target.files[0]);
+    img.src = URL.createObjectURL(imagen);
 
     img.onload = function () {
       var sc = scaling(img.width, img.height, canvas);
@@ -68,7 +68,7 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
         drawTextBG(ctx, tag.text, tag.startX, tag.startY + tag.height + 5);
       }
     });
-  });
+  }, [tags]);
 
   function startPos(e) {
     let { offsetX, offsetY } = e.nativeEvent;
@@ -89,7 +89,7 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
     ctx.beginPath();
 
     ctx.lineWidth = 5;
-    ctx.strokeStyle = "red";
+    ctx.strokeStyle = "blue";
   }
 
   function endPos(e) {
@@ -133,7 +133,14 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
       <br></br>
       <label htmlFor="contained-button-file">
         {foto ? null : (
-          <Button variant="contained" color="primary" component="span">
+          <Button
+            variant="contained"
+            color="primary"
+            component="span"
+            style={{
+              color: "white",
+            }}
+          >
             Upload
           </Button>
         )}
