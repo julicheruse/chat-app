@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect } from "react";
 
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
-
+import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { scaling, drawTextBG } from "./utils";
@@ -13,11 +13,12 @@ export default function ViewImage({ image, tags, open, setOpen }) {
     setOpen(false);
   };
 
-  var canvas = document.getElementById("canv");
+  console.log("i:", image, "t:", tags);
 
-  useEffect(() => {
-    //var canvas = document.createElement("canvas");
-
+  useLayoutEffect(() => {
+    var canvas = document.createElement("canvas");
+    document.getElementById("dialog-content") &&
+      document.getElementById("dialog-content").appendChild(canvas);
     console.log(canvas);
     var ctx = canvas.getContext("2d");
     canvas.width = 600;
@@ -43,7 +44,7 @@ export default function ViewImage({ image, tags, open, setOpen }) {
         }
       });
     };
-  }, [image, tags, open, canvas]);
+  }, [image, tags, open]);
 
   return (
     <div>
@@ -55,7 +56,7 @@ export default function ViewImage({ image, tags, open, setOpen }) {
         maxHeight="100%"
       >
         <DialogTitle id="form-dialog-title">View Picture</DialogTitle>
-        <canvas id="canv"></canvas>
+        <DialogContent id="dialog-content"></DialogContent>
 
         <DialogActions>
           <Button onClick={handleClose} color="primary">
