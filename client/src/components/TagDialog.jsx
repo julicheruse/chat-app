@@ -18,8 +18,9 @@ export default function TagDialog({
 }) {
   const handleTagClick = (e) => {
     e.preventDefault();
+    const canvas = document.getElementById("canv");
+    const ctx = canvas.getContext("2d");
     setTags([...tags, tag]);
-    let ctx = document.getElementById("canv").getContext("2d");
 
     if (tag.startY > 30) {
       drawTextBG(ctx, tag.text, tag.startX, tag.startY - 20);
@@ -30,7 +31,9 @@ export default function TagDialog({
   };
 
   const handleClose = () => {
-    setTag({});
+    const canvas = document.getElementById("canv");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     setTagging(false);
   };
   const handleTextChange = (e) => {

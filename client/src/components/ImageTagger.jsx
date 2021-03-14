@@ -60,7 +60,7 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
     tags.forEach((tag) => {
       ctx.beginPath();
       ctx.lineWidth = 5;
-      ctx.strokeStyle = "red";
+      ctx.strokeStyle = "#80d1c0";
       ctx.strokeRect(tag.startX, tag.startY, tag.width, tag.height);
       if (tag.startY > 30) {
         drawTextBG(ctx, tag.text, tag.startX, tag.startY - 20);
@@ -68,7 +68,7 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
         drawTextBG(ctx, tag.text, tag.startX, tag.startY + tag.height + 5);
       }
     });
-  }, [tags]);
+  }, [tags, tagging]);
 
   function startPos(e) {
     let { offsetX, offsetY } = e.nativeEvent;
@@ -84,16 +84,15 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
 
     setEnd({ x: offsetX, y: offsetY });
     ctx.beginPath();
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.strokeRect(start.x, start.y, end.x - start.x, end.y - start.y);
     ctx.beginPath();
 
     ctx.lineWidth = 5;
-    ctx.strokeStyle = "blue";
+    ctx.strokeStyle = "#80d197";
   }
 
   function endPos(e) {
-    //let ctx = canvas.getContext("2d");
     draw(e);
     setDrawing(false);
 
