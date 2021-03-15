@@ -84,7 +84,7 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
 
     setEnd({ x: offsetX, y: offsetY });
     ctx.beginPath();
-    //ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.strokeRect(start.x, start.y, end.x - start.x, end.y - start.y);
     ctx.beginPath();
 
