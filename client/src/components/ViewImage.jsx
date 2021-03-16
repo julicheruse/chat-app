@@ -1,50 +1,51 @@
-import React, { useLayoutEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
 
 import { scaling, drawTextBG } from "./utils";
 
 export default function ViewImage({ image, tags, open, setOpen }) {
+  //const ref = useRef(null);
+  const [canvas, setCanvas] = useState(null);
   const handleClose = () => {
     setOpen(false);
   };
 
-  console.log("i:", image, "t:", tags);
+  const ref = useCallback((node) => {
+    if (node !== null) {
+      setCanvas(node);
+    }
+  }, []);
 
-  useLayoutEffect(() => {
-    var canvas = document.createElement("canvas");
-    document.getElementById("dialog-content") &&
-      document.getElementById("dialog-content").appendChild(canvas);
-    console.log(canvas);
-    var ctx = canvas.getContext("2d");
-    canvas.width = 600;
-    canvas.height = 500;
-    var img = new Image();
-    img.src = image;
-    console.log(img);
+  useEffect(() => {
+    console.log(ref);
+    if (canvas) {
+      console.log(canvas);
+      var ctx = canvas.getContext("2d");
 
-    img.onload = function () {
-      var sc = scaling(img.width, img.height, canvas);
-      ctx.scale(sc, sc);
-      ctx.drawImage(img, 0, 0);
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      tags.forEach((tag) => {
-        ctx.beginPath();
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = "red";
-        ctx.strokeRect(tag.startX, tag.startY, tag.width, tag.height);
-        if (tag.startY > 30) {
-          drawTextBG(ctx, tag.text, tag.startX, tag.startY - 20);
-        } else {
-          drawTextBG(ctx, tag.text, tag.startX, tag.startY + tag.height + 5);
-        }
-      });
-    };
-  }, [image, tags, open, ViewImage]);
+      var img = new Image();
+      img.src = image;
+      console.log(img);
+
+      img.onload = function () {
+        var sc = scaling(img.width, img.height, canvas);
+        ctx.scale(sc, sc);
+        ctx.drawImage(img, 0, 0);
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        tags.forEach((tag) => {
+          ctx.beginPath();
+          ctx.lineWidth = 5;
+          ctx.strokeStyle = "#80d1c0";
+          ctx.strokeRect(tag.startX, tag.startY, tag.width, tag.height);
+          if (tag.startY > 30) {
+            drawTextBG(ctx, tag.text, tag.startX, tag.startY - 20);
+          } else {
+            drawTextBG(ctx, tag.text, tag.startX, tag.startY + tag.height + 5);
+          }
+        });
+      };
+    }
+  }, [canvas, image, ref, tags]);
 
   return (
     <div>
@@ -56,7 +57,7 @@ export default function ViewImage({ image, tags, open, setOpen }) {
         maxHeight="100%"
       >
         <DialogTitle id="form-dialog-title">View Picture</DialogTitle>
-        <DialogContent id="dialog-content"></DialogContent>
+        <canvas ref={ref} id="canv" width="600" height="500"></canvas>
 
         <DialogActions>
           <Button onClick={handleClose} color="primary">
