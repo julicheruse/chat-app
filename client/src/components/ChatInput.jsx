@@ -4,9 +4,9 @@ import { Button, TextField, Paper } from "@material-ui/core";
 import socket from "./Socket";
 
 export default function ChatInput({ name, message, setMessage }) {
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await socket.emit("message", name, message);
+    socket.emit("message", name, message);
     setMessage("");
   };
   return (
@@ -34,11 +34,12 @@ export default function ChatInput({ name, message, setMessage }) {
             type="submit"
             variant="contained"
             color="primary"
+            disabled={message ? false : true}
             style={{ margin: "10px", color: "white" }}
           >
             Send
           </Button>
-        </div>{" "}
+        </div>
       </form>
     </Paper>
   );
