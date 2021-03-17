@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import socket from "./Socket";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { scaling } from "./utils";
@@ -23,7 +23,6 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
   const [drawing, setDrawing] = useState(false);
   const [start, setStart] = useState({});
   const [end, setEnd] = useState({});
-
   const [tag, setTag] = useState({});
   const [tagging, setTagging] = useState(false);
 
@@ -34,6 +33,14 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
     const canvas = document.getElementById("canv");
     var ctx = canvas.getContext("2d");
     const imagen = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      const bytes = new Uint8Array(reader.result);
+      console.log("bytes", bytes);
+      setCanvs(bytes);
+      console.log(canvs, "can");
+    };
+    reader.readAsArrayBuffer(event.target.files[0]);
     canvas.hidden = false;
     canvas.width = 600;
     canvas.height = 500;
@@ -48,7 +55,6 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
       canvas.style.backgroundImage = `url(${URL.createObjectURL(
         event.target.files[0]
       )}`;
-      setCanvs(img);
     };
   };
   const canvas = document.getElementById("canv");
@@ -86,7 +92,7 @@ export default function ImageTagger({ canvs, setCanvs, tags, setTags }) {
     ctx.beginPath();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.strokeRect(start.x, start.y, end.x - start.x, end.y - start.y);
-    ctx.beginPath();
+    //ctx.beginPath();
 
     ctx.lineWidth = 5;
     ctx.strokeStyle = "#80d197";
