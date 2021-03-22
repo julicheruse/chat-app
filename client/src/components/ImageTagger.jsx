@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import socket from "./Socket";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { scaling } from "./utils";
