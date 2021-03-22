@@ -13,6 +13,7 @@ export default function ImageDialog({ name }) {
   const [open, setOpen] = useState(false);
   const [canvs, setCanvs] = useState(null);
   const [tags, setTags] = useState([]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -23,9 +24,10 @@ export default function ImageDialog({ name }) {
   };
 
   const handleSend = () => {
-    socket.emit("image", name, canvs.src, tags);
+    socket.emit("image", name, canvs, tags);
     console.log(canvs);
     setOpen(false);
+    setCanvs(null);
   };
 
   return (
@@ -64,7 +66,13 @@ export default function ImageDialog({ name }) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleSend} type="submit" color="primary">
+          <Button
+            id="send-button"
+            onClick={handleSend}
+            type="submit"
+            color="primary"
+            disabled={!canvs}
+          >
             Send
           </Button>
         </DialogActions>

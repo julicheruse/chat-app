@@ -7,7 +7,12 @@ import ChatInput from "./ChatInput";
 import ChatToolbar from "./ChatToolbar";
 
 export default function Chat({ name }) {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState({
+    sender: "",
+    timestamp: "",
+    type: "",
+    content: "",
+  });
   const [messages, setMessages] = useState([]);
   const [guests, setGuests] = useState([]);
   useEffect(() => {

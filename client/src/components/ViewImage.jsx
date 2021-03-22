@@ -24,7 +24,7 @@ export default function ViewImage({ image, tags, open, setOpen }) {
       var ctx = canvas.getContext("2d");
 
       var img = new Image();
-      img.src = image;
+      img.src = `data:image/jpg;base64,${image}`;
       console.log(img);
 
       img.onload = function () {

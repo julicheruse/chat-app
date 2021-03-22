@@ -12,19 +12,32 @@ const io = require("socket.io")(server, {
 });
 
 var names = [];
+var time = new Date();
 
 io.on("connection", (socket) => {
   socket.on("conectado", (name) => {
-    names = [...names, name];
-    io.emit("guests", names);
-    io.emit("conectado", name);
-    console.log(names);
+    if (name !== "") {
+      names = [...names, name];
+      io.emit("guests", names);
+      io.emit("conectado", name);
+      console.log(names);
+    } else return;
   });
   socket.on("message", (name, message) => {
-    io.emit("messages", { name, message });
+    io.emit("messages", {
+      sender: name,
+      timestamp: time.getTime(),
+      type: "text",
+      content: message,
+    });
   });
-  socket.on("image", (name, image, tags) => {
-    io.emit("messages", { name, image, tags });
+  socket.on("image", async (name, image, tags) => {
+    io.emit("messages", {
+      sender: name,
+      timestamp: time.getTime(),
+      type: "image",
+      content: { image: image.toString("base64"), tags },
+    });
   });
 });
 

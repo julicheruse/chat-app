@@ -59,7 +59,7 @@ export default function ChatMessages({ messages, name, setMessages }) {
             <div>
               <ChatMsg
                 key={m.image}
-                avatar={m.name[0]}
+                avatar={m.sender[0]}
                 side={m.name === name ? "right" : "left"}
                 messages={[
                   <img
@@ -77,10 +77,25 @@ export default function ChatMessages({ messages, name, setMessages }) {
             </div>
           ) : (
             <ChatMsg
-              key={m.messages}
-              avatar={m.name[0]}
-              side={m.name === name ? "right" : "left"}
-              messages={[m.message]}
+              key={m.timestamp}
+              avatar={m.sender[0]}
+              side={m.sender === name ? "right" : "left"}
+              messages={
+                m.type === "text"
+                  ? [m.content]
+                  : [
+                      <img
+                        alt="imagen"
+                        width="150"
+                        src={`data:image/jpg;base64,${m.content.image}`}
+                        onClick={() => {
+                          setTags(m.content.tags);
+                          setImage(m.content.image);
+                          handleClick();
+                        }}
+                      ></img>,
+                    ]
+              }
             />
           )
         )}
